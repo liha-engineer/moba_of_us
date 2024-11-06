@@ -1,5 +1,6 @@
 import User from "../../classes/models/user.class.js";
-import { HANDLER_IDS, RESPONSE_SUCCESS_CODE } from "../../constants/handlerIds.js";
+import { HANDLER_IDS } from "../../constants/handlerIds.js";
+import { RESPONSE_CODES } from "../../constants/responseCodes.js";
 import { createUser, findUserByDeviceId, updateUserLogin } from "../../db/user/user.db.js";
 import { getGameSession } from "../../sessions/game.session.js";
 import { addUser } from "../../sessions/user.session.js";
@@ -32,7 +33,7 @@ const initialHandler = async ({ socket, userId, payload }) => {
 		const gameSession = getGameSession();
 		gameSession.addUser(user);
 
-		const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_SUCCESS_CODE, {
+		const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_CODES.SUCCESS, {
 			userId: deviceId,
 			x: user.x,
 			y: user.y,
