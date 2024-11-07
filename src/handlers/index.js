@@ -2,7 +2,6 @@ import { HANDLER_IDS } from "../constants/handlerIds.js";
 import locationUpdateHandler from "./game/locationUpdate.handler.js";
 import initialHandler from "./user/initial.handler.js";
 
-
 const handlers = {
 	[HANDLER_IDS.INITIAL]: {
 		// 프로토(프로토콜 버퍼)의 타입을 말하는 것 - packetNames.js 의 그 풀네임

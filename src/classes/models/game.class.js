@@ -24,17 +24,20 @@ class Game {
 	}
 
 	// 여기서 받는 userId는 제외할 user의 ID - 나 빼고 나머지 유저의 위치를 받기 위함
-	// 이 메서드의 결과값을 바이트배열로 직렬화 해줄 함수가 필요함
 	getAllLocation(userId) {
 		const locationData = this.users
 			// 나 빼고 나머지의 데이터만 갱신받기 위해 필터 걸기
 			.filter((user) => user.id !== userId)
 			// 나를 뺀 나머지 유저의 데이터 중 갱신받을 데이터 목록
 			.map((user) => {
+				console.log('map이 잘 돌아가나?!')
 				return { id: user.id, playerId: user.playerId, x: user.x, y: user.y };
 			});
 
-		return createLocationPacket(locationData)
+			console.log('locationData 잘 나오나?', locationData)
+
+		// 이 메서드의 결과값을 바이트배열로 직렬화 해줄 함수가 필요함
+		return createLocationPacket(locationData);
 	}
 }
 
