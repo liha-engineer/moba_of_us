@@ -1,5 +1,5 @@
 import { PACKET_TYPE } from "../../constants/header.js";
-import { createNotificationPacket } from "../../utils/notification/game.notification.js";
+import { createLocationPacket } from "../../utils/notification/game.notification.js";
 
 class Game {
 	constructor(id) {
@@ -7,11 +7,11 @@ class Game {
 		this.users = [];
 	}
 
-	addUser(user) {
+	addUserInGameSession(user) {
 		this.users.push(user);
 	}
 
-	getUser(userId) {
+	getUserInGameSession(userId) {
 		return this.users.find((user) => user.id === userId);
 	}
 	// userId로 찾는게 일반적이긴 하나 socket으로도 특정되므로 찾을 수 있다
@@ -23,6 +23,8 @@ class Game {
 		}
 	}
 
+	// 여기서 받는 userId는 제외할 user의 ID - 나 빼고 나머지 유저의 위치를 받기 위함
+	// 이 메서드의 결과값을 바이트배열로 직렬화 해줄 함수가 필요함
 	getAllLocation(userId) {
 		const locationData = this.users
 			// 나 빼고 나머지의 데이터만 갱신받기 위해 필터 걸기
@@ -32,7 +34,7 @@ class Game {
 				return { id: user.id, playerId: user.playerId, x: user.x, y: user.y };
 			});
 
-		return createNotificationPacket(locationData, PACKET_TYPE.LOCATION);
+		return createLocationPacket(locationData)
 	}
 }
 
