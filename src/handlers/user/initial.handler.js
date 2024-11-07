@@ -28,10 +28,10 @@ const initialHandler = async ({ socket, userId, payload }) => {
 		}
 
 		user = new User(socket, deviceId, playerId, latency, coords);
-		// 이 addUser는 유저의 세션을 생성해주는 것 - 세션에 유저 추가하는거라 DB에 저장하는 것과는 상관 없음
+		// 이 addUser는 유저가 처음 생성되어 유저세션으로 들어가는 것
 		addUser(user);
 		const gameSession = getGameSession();
-		gameSession.addUser(user);
+		gameSession.addUserInGameSession(user);
 
 		const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_CODES.SUCCESS, {
 			userId: deviceId,
