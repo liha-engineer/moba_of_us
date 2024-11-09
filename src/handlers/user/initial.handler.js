@@ -1,4 +1,3 @@
-import User from "../../classes/models/user.class.js";
 import { HANDLER_IDS } from "../../constants/handlerIds.js";
 import { RESPONSE_CODES } from "../../constants/responseCodes.js";
 import { createUser, findUserByDeviceId, updateUserLogin } from "../../db/user/user.db.js";
