@@ -27,9 +27,9 @@ const initialHandler = async ({ socket, userId, payload }) => {
 			coords.y = user.yCoord;
 		}
 
-		user = new User(socket, deviceId, playerId, latency, coords);
-		// 이 addUser는 유저가 처음 생성되어 유저세션으로 들어가는 것
-		addUser(user);
+		user = addUser(socket, deviceId, playerId, latency);
+		// 이 addUser는 유저세션으로 들어가는 것 - DB에 저장되는 것과는 상관이 없다
+	
 		const gameSession = getGameSession();
 		gameSession.addUserInGameSession(user);
 
