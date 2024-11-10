@@ -11,6 +11,8 @@ try {
 		console.error('게임 세션이 존재하지 않습니다.');
 	}
 
+	console.log('gameSession: ', gameSession)
+
 	const user = gameSession.getUserInGameSession(userId);
 	if(!user) {
 		console.error('게임세션에 유저가 존재하지 않습니다.')
