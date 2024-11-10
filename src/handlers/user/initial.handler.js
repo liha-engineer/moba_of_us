@@ -1,3 +1,4 @@
+import User from "../../classes/models/user.class.js";
 import { HANDLER_IDS } from "../../constants/handlerIds.js";
 import { RESPONSE_CODES } from "../../constants/responseCodes.js";
 import { createUser, findUserByDeviceId, updateUserLogin } from "../../db/user/user.db.js";
@@ -9,7 +10,7 @@ import { createResponse } from "../../utils/response/createResponse.js";
 // onData.js에 보면 handler가 { socket, userId, payload } 를 인자로 받는다 - 여기서도 넣어준다
 const initialHandler = async ({ socket, userId, payload }) => {
 	try {
-		const { deviceId, latency, playerId } = payload;
+		const { deviceId,  playerId, latency } = payload;
 
 		let user = await findUserByDeviceId(deviceId);
 		let coords = {
@@ -26,9 +27,10 @@ const initialHandler = async ({ socket, userId, payload }) => {
 			coords.y = user.yCoord;
 		}
 
-		user = addUser(socket, deviceId, playerId, latency);
 		// 이 addUser는 유저세션으로 들어가는 것 - DB에 저장되는 것과는 상관이 없다
-	
+		user = new User(socket, deviceId, playerId, latency, coords);
+		addUser(user)
+
 		const gameSession = getGameSession();
 		gameSession.addUserInGameSession(user);
 
@@ -37,6 +39,7 @@ const initialHandler = async ({ socket, userId, payload }) => {
 			x: user.x,
 			y: user.y,
 		});
+
 		socket.write(initialResponse);
 	} catch (e) {
 		console.error(e);
